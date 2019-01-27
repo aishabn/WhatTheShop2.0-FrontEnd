@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 
 const instance = axios.create({
   baseURL: "http://127.0.0.1:8000/"
+  // baseURL: "http://192.168.100.102:8000/"
 });
 
 class Store {
@@ -15,9 +16,9 @@ class Store {
   setAuthToken(token) {
     if (token) {
       // Apply to every request
-      axios.defaults.headers.common["Authorization"] = `JWT ${token}`;
+      axios.defaults.headers.common.Authorization = `JWT ${token}`;
     } else {
-      delete axios.defaults.headers.common["Authorization"];
+      delete axios.defaults.headers.common.Authorization;
     }
   }
 
@@ -32,7 +33,7 @@ class Store {
   }
 
   logoutUser() {
-    AsyncStorage.removeItem("jwtToken").then(
+    return AsyncStorage.removeItem("jwtToken").then(
       () => {
         this.setCurrentUser();
         this.setAuthToken();
@@ -43,18 +44,14 @@ class Store {
     );
   }
 
-  loginUser(username, password) {
-    const userData = {
-      username: username,
-      password: password
-    };
+  loginUser(userData, navigation) {
     instance
-      .post("/api/login/", userData)
+      .post("api/login/", userData)
       .then(res => res.data)
       .then(user => {
         const { token } = user;
         // Save token to localStorage
-        AsyncStorage.setItem("jwtToken", token).then(
+        return AsyncStorage.setItem("jwtToken", token).then(
           () => {
             // Set token to Auth header
             this.setAuthToken(token);
@@ -65,11 +62,26 @@ class Store {
           () => console.log("something went wrong with setting jwt token")
         );
       })
+      .then(() => {
+        navigation.replace("Profile");
+      })
       .catch(err => console.log("something went wrong logging in"));
   }
 
+  registerUser(userData, navigation) {
+    instance
+      .post("api/register/", userData)
+      .then(res => res.data)
+      .then(user => {
+        console.log(userData);
+
+        this.loginUser(userData, navigation);
+      })
+      .catch(err => console.error(err.response.data));
+  }
+
   checkForToken = () => {
-    AsyncStorage.getItem("jwtToken")
+    return AsyncStorage.getItem("jwtToken")
       .then(token => {
         if (token) {
           const currentTime = Date.now() / 1000;
@@ -85,7 +97,7 @@ class Store {
             this.setCurrentUser(decodedUser);
           } else {
             this.logoutUser();
-            // Redirect to login
+            // Redirect to list
           }
         }
       })

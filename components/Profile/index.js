@@ -2,6 +2,9 @@ import React, { Component } from "react";
 
 // NativeBase Components
 import { Card, CardItem, Text, Button } from "native-base";
+
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+
 import authStore from "../../stores/authStore";
 
 class Profile extends Component {
