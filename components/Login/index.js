@@ -14,6 +14,20 @@ class Login extends Component {
       username: "",
       password: ""
     };
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
+  }
+
+  static navigationOptions = {
+    title: "Login"
+  };
+
+  handleLogin() {
+    authStore.loginUser(this.state, this.props.navigation);
+  }
+
+  handleRegister() {
+    authStore.registerUser(this.state, this.props.navigation);
   }
 
   render() {
@@ -34,11 +48,11 @@ class Login extends Component {
             onChangeText={password => this.setState({ password })}
           />
         </Item>
-        <Button
-          full
-          onPress={() => alert("You need to implement Login noob...")}
-        >
+        <Button full onPress={() => this.handleLogin()}>
           <Text>Login</Text>
+        </Button>
+        <Button full onPress={() => this.handleRegister()}>
+          <Text>Register</Text>
         </Button>
       </Form>
     );
