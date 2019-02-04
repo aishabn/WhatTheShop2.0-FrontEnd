@@ -10,17 +10,21 @@ import { List, Content } from "native-base";
 // Component
 import CategoryItem from "./CategoryItem";
 import items from "../data";
+import CartButton from "../CartButton";
+// import CartStore from "../../stores/cartStore";
+import ProductStore from "../../stores/ProductStore";
 
 class CategoryList extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: "Category List",
     headerLeft: null,
-    headerRight: null
+    headerRight: <CartButton route="Cart" />
   });
   render() {
+    const products = ProductStore.products;
     let CategoryList;
-    CategoryList = items.map(item => (
-      <CategoryItem item={item} key={item.id} />
+    CategoryList = products.map(product => (
+      <CategoryItem product={product} key={product.id} />
     ));
     return (
       <Content>

@@ -10,12 +10,14 @@ import { List, Content } from "native-base";
 // Component
 import ProductItem from "./ProductItem";
 import items from "../data";
+import CartButton from "../CartButton";
+import ProductStore from "../../stores/ProductStore";
 
 class ProductList extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: "Product List",
     headerLeft: null,
-    headerRight: null
+    headerRight: <CartButton route="Cart" />
   });
 
   render() {
