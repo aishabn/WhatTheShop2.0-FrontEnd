@@ -1,30 +1,33 @@
 import { decorate, observable, computed } from "mobx";
 import axios from "axios";
 
+const instance = axios.create({
+  baseURL: "http://207.154.255.247/"
+});
+
 class ProductStore {
   constructor() {
-    this.products = null;
-    this.total = 0;
-    this.loading = true;
+    this.products = [];
+    // this.loading = true;
     this.fetchAllProducts();
   }
 
   fetchAllProducts() {
-    axios
-      .get("")
+    instance
+      .get("api/category/")
       .then(res => res.data)
-      .then(products => {
-        this.products = products;
-        this.loading = false;
+      .then(product => {
+        this.products = product;
+        // this.loading = false;
+        console.log(product);
       })
       .catch(err => console.error(err));
   }
 }
 
-decorate(CoffeeStore, {
-  total: computed,
-  products: observable,
-  loading: observable
+decorate(ProductStore, {
+  products: observable
+  // loading: observable
 });
 
 export default new ProductStore();

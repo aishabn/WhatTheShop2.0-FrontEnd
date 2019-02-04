@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
+import NumericInput from "react-native-numeric-input";
 
 // NativeBase Components
 import {
@@ -12,7 +13,11 @@ import {
   List,
   ListItem,
   Picker,
-  Content
+  Content,
+  Toast,
+  Root,
+  Row,
+  Input
 } from "native-base";
 
 // Style
@@ -20,6 +25,8 @@ import {
 //Store
 
 // Components
+import CartButton from "../CartButton";
+import CartStore from "../../stores/cartStore";
 
 class ProductDetail extends Component {
   constructor(props) {
@@ -27,63 +34,76 @@ class ProductDetail extends Component {
     this.state = {
       quantity: 1
     };
+    // this.changeQuantity = this.changeQuantity.bind(this);
   }
-  //   static navigationOptions = ({ navigation }) => ({
-  //     title: navigation.getParam("item", {}).name
-  //     // headerRight: <Quantity route="Cart" />
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.getParam("item", {}).name,
+    headerRight: <CartButton route="Cart" />
+  });
+
+  // changeQuantity(value) {
+  //   console.log(value);
+  //   this.setState({
+  //     quantity: value
   //   });
+  // }
+  // increasetItem = () => {
+  //   this.setState({ quantity: this.state.quantity + 1 });
+  // };
+  // decreaseItem = () => {
+  //   this.setState({ quantity: this.state.quantity - 1 });
+  // };
 
-  //   changeQuantity(value) {
-  //     this.setState({
-  //       quantity: value
-  //     });
-  //   }
-
-  //   handleAdd() {
-  //     const { quantity } = this.state;
-  //     let item = {
-  //       quantity: quantity
-  //     };
-  //     CartStore.addItemToCart(item);
-  //   }
+  handleAdd() {
+    const quantity = this.state.quantity;
+    const item = this.props.navigation.getParam("itemDetail", {});
+    let newItem = {
+      ...item,
+      quantity: quantity
+    };
+    CartStore.addItemToCart(newItem);
+  }
 
   render() {
     const itemDetail = this.props.navigation.getParam("itemDetail", {});
-
+    console.log(this.state.quantity);
     return (
-      <Content>
-        <List>
-          <ListItem>
-            <Left>
-              <Text>
-                {itemDetail.name + "\n"}
-                <Text note>{itemDetail.description}</Text>
-              </Text>
-            </Left>
-            <Body />
-            <Right>
-              <Thumbnail bordered source={{ uri: itemDetail.img }} />
-            </Right>
-          </ListItem>
-          <ListItem>
-            <Left>
-              {/* <Picker
-               note
-               mode="dropdown"
-               selectedValue={this.state.quantity}
-               onValueChange={this.changeQuantity.bind(this)}
-             >
-               <Picker.Item label="1" value="1" />
-               <Picker.Item label="2" value="2" />
-               <Picker.Item label="3" value="3" />
-             </Picker> */}
-            </Left>
-          </ListItem>
-          <Button full danger onPress={() => this.handleAdd()}>
-            <Text>Add</Text>
-          </Button>
-        </List>
-      </Content>
+      <Root>
+        <Content>
+          <List>
+            <ListItem>
+              <Left>
+                <Text>
+                  {itemDetail.name + "\n"}
+                  <Text note>{itemDetail.description}</Text>
+                </Text>
+              </Left>
+              <Body />
+              <Right>
+                <Thumbnail bordered source={{ uri: itemDetail.img }} />
+              </Right>
+            </ListItem>
+            <ListItem>
+              <Left />
+            </ListItem>
+            <NumericInput
+              type="plus-minus"
+              maxValue={10}
+              minValue={1}
+              step={1}
+              valueType="integer"
+              editable={false}
+              initValue={this.state.quantity}
+              value={this.state.quantity}
+              onChange={value => this.setState({ quantity: value })}
+            />
+
+            <Button full danger onPress={() => this.handleAdd()}>
+              <Text>Add</Text>
+            </Button>
+          </List>
+        </Content>
+      </Root>
     );
   }
 }

@@ -21,7 +21,7 @@ import items from "../data";
 class CategoryItem extends Component {
   handlePress() {
     this.props.navigation.navigate("ProductListScreen", {
-      categoryItem: this.props.item
+      categoryItem: this.props.product
     });
   }
 
@@ -34,13 +34,13 @@ class CategoryItem extends Component {
             <CardItem>
               <Left>
                 <Body>
-                  <Text>{this.props.item.name}</Text>
+                  <Text>{this.props.product.name}</Text>
                 </Body>
               </Left>
             </CardItem>
             <CardItem cardBody>
               <Image
-                source={{ uri: this.props.item.img }}
+                source={{ uri: this.props.product.img }}
                 style={{ height: 200, width: null, flex: 1 }}
               />
               <Button onPress={() => this.handlePress()}>
@@ -55,3 +55,27 @@ class CategoryItem extends Component {
 }
 
 export default withNavigation(CategoryItem);
+
+// import React, { Component } from "react";
+// import { Container, Header, Content, Thumbnail, Text } from "native-base";
+// import { withNavigation } from "react-navigation";
+// class CategoryItem extends Component {
+//   render() {
+//     return (
+//       <Container>
+//         <Content>
+//           <Thumbnail
+//             square
+//             large
+//             source={{
+//               uri:
+//                 "https://facebook.github.io/react-native/docs/assets/favicon.png"
+//             }}
+//           />
+//         </Content>
+//       </Container>
+//     );
+//   }
+// }
+
+// export default withNavigation(CategoryItem);

@@ -16,8 +16,6 @@ import {
   Right
 } from "native-base";
 
-import items from "../data";
-
 class ProductItem extends Component {
   handlePress() {
     this.props.navigation.navigate("ProductDetailScreen", {
@@ -44,6 +42,7 @@ class ProductItem extends Component {
             </CardItem>
             <CardItem cardBody>
               <Image
+                onPress={() => this.handlePress()}
                 source={{ uri: this.props.product.img }}
                 style={{ height: 200, width: null, flex: 1 }}
               />
