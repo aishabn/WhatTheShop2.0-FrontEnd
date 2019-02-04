@@ -14,20 +14,18 @@ class Login extends Component {
       username: "",
       password: ""
     };
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleRegister = this.handleRegister.bind(this);
   }
 
-  static navigationOptions = {
-    title: "Login"
+  static navigationOptions = ({ navigation }) => {
+    title: "Login";
   };
 
   handleLogin() {
     authStore.loginUser(this.state, this.props.navigation);
   }
 
-  handleRegister() {
-    authStore.registerUser(this.state, this.props.navigation);
+  handleSignUp() {
+    this.props.navigation.replace("Register");
   }
 
   render() {
@@ -51,8 +49,8 @@ class Login extends Component {
         <Button full onPress={() => this.handleLogin()}>
           <Text>Login</Text>
         </Button>
-        <Button full onPress={() => this.handleRegister()}>
-          <Text>Register</Text>
+        <Button full onPress={() => this.handleSignUp()}>
+          <Text>You don't have an account? SignUp Now</Text>
         </Button>
       </Form>
     );
