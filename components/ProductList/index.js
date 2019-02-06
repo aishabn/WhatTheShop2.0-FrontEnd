@@ -16,7 +16,7 @@ import ProductStore from "../../stores/ProductStore";
 class ProductList extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: "Product List",
-    headerLeft: null,
+
     headerRight: <CartButton route="Cart" />
   });
 

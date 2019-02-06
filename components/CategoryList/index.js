@@ -17,7 +17,7 @@ import ProductStore from "../../stores/ProductStore";
 class CategoryList extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: "Category List",
-    headerLeft: null,
+
     headerRight: <CartButton route="Cart" />
   });
   render() {

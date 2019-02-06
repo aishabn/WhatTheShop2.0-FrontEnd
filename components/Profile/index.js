@@ -9,6 +9,8 @@ import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 
 import authStore from "../../stores/authStore";
 
+import PreviousOrders from "../PreviousOrders";
+
 const instance = axios.create({
   baseURL: "http:/207.154.255.247/"
 });
