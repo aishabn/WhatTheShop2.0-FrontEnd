@@ -10,10 +10,10 @@ import CartStore from "../../stores/cartStore";
 
 class ShopCart extends Component {
   render() {
-    const list = CartStore.list;
+    const cartItems = CartStore.cartItems;
     let content;
-    if (list) {
-      content = list.map(item => <CartItem item={item} key={item.id} />);
+    if (cartItems) {
+      content = cartItems.map(item => <CartItem item={item} key={item.id} />);
     }
 
     return (

@@ -3,20 +3,22 @@ import { Toast } from "native-base";
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://207.154.255.247/"
+  baseURL: "http://127.0.0.1:8000/"
 });
 
 class CartStore {
   constructor() {
-    this.list = [];
+    this.cartItems = [];
     this.showToast = false;
+    this.previousOrders = [];
   }
 
   fetchOrders() {
     instance
       .get("api/order")
       .then(res => res.data)
-      .then(order => (this.order = order));
+      .then(order => (this.previousOrders = order))
+      .catch(err => console.error(err));
   }
 
   postOrder(newOrder) {
@@ -24,14 +26,14 @@ class CartStore {
       .post("api/order/create/", newOrder)
       .then(res => res.data)
       .then(order => {
-        this.list.push(order);
+        this.cartItems.push(order);
         // this.loading = false;
       })
       .catch(err => console.error(err));
   }
 
   addItemToCart(item) {
-    const foundItem = this.list.find(
+    const foundItem = this.cartItems.find(
       cartItem => cartItem.name === item.name && cartItem.price === item.price
     );
     if (foundItem) {
@@ -42,7 +44,7 @@ class CartStore {
         duration: 3000
       });
     } else {
-      this.list.push(item);
+      this.cartItems.push(item);
       Toast.show({
         text: `${item.name} has been added to the list`,
         buttonText: "Okay",
@@ -52,27 +54,29 @@ class CartStore {
   }
 
   removeItemFromCart(item) {
-    this.list = this.list.filter(cartItem => cartItem !== item);
+    this.cartItems = this.cartItems.filter(cartItem => cartItem !== item);
   }
 
-  checkoutCart() {
-    this.list = [];
+  checkoutCart(newOrder) {
+    this.cartItems = [];
+    this.postOrder(newOrder);
     alert("order received!");
   }
   get quantity() {
     let quantity = 0;
-    this.list.forEach(item => (quantity = quantity + item.quantity));
+    this.cartItems.forEach(item => (quantity = quantity + item.quantity));
     return quantity;
   }
   get total() {
     let total = 0;
-    this.list.forEach(item => (total += item.price * item.quantity));
+    this.cartItems.forEach(item => (total += item.price * item.quantity));
     return total;
   }
 }
 
 decorate(CartStore, {
-  list: observable,
+  cartItems: observable,
+  previousOrders: observable,
   addItemToCart: action,
   removeItemFromCart: action,
   checkoutCart: action,

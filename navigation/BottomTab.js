@@ -1,46 +1,35 @@
 import React from "react";
 import { Icon } from "native-base";
 
-import { createBottomTabNavigator, createAppContainer } from "react-navigation";
-import ProfileStack from "./ProfileStack";
-import CatStack from "./CategoryListStack";
+import { createStackNavigator, createAppContainer } from "react-navigation";
+import CategoryListScreen from "../components/CategoryList";
+import ProductListScreen from "../components/ProductList";
+import ProductDetailScreen from "../components/ProductDetail";
+import Cart from "../components/Cart";
+import Menu from "../components/Menu/index";
+import Login from "../components/Login";
+import Register from "../components/Register";
+import About from "../components/Pages/About";
+import Contact from "../components/Pages/Contact";
 
-const BottomTab = createBottomTabNavigator(
+const MenuStack = createStackNavigator(
   {
-    ProfileTab: ProfileStack,
-    LolTab: CatStack
+    CL: CategoryListScreen,
+    ProductListScreen: ProductListScreen,
+    ProductDetailScreen: ProductDetailScreen,
+    Cart: Cart,
+    Menu: Menu,
+    Login: Login,
+    Register: Register,
+    About: About,
+    Contact: Contact
   },
   {
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ tintColor }) => {
-        const { routeName } = navigation.state;
-        let iconName;
-        if (routeName === "LolTab") {
-          iconName = "smiley";
-          iconType = "Octicons";
-        } else if (routeName === "ProfileTab") {
-          iconName = "person";
-          iconType = "MaterialIcons";
-        }
-        return (
-          <Icon name={iconName} style={{ color: tintColor }} type={iconType} />
-        );
-      }
-    }),
-    tabBarOptions: {
-      showLabel: false,
-      activeTintColor: "#6200EE",
-      inactiveTintColor: "#858585",
-      style: {
-        backgroundColor: "white"
-      },
-      labelStyle: {
-        fontSize: 12
-      }
-    }
+    initialRouteName: "Menu",
+    defaultNavigationOptions: {}
   }
 );
 
-const AppContainer = createAppContainer(BottomTab);
+const AppContainer = createAppContainer(MenuStack);
 
 export default AppContainer;

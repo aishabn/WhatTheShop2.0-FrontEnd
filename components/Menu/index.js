@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { Constants } from "expo";
 import { withNavigation } from "react-navigation";
+import authStore from "../../stores/authStore";
 
 const { width, height } = Dimensions.get("window");
 const DURATION = 400;
@@ -22,7 +23,10 @@ const ICON_LINE_HEIGHT = 2;
 const closeItems = [0, 1];
 const burgerItems = [0, 1, 2];
 
-class Practice extends Component {
+class Menu extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    header: null
+  });
   constructor(props) {
     super(props);
 
@@ -299,14 +303,41 @@ class Practice extends Component {
             }}
           >
             <Text
-              style={styles.buttonStyle}
+              style={styles.buttonStyleShop}
               onPress={() => this.props.navigation.navigate("CL")}
             >
-              Categories
+              Shop Now
             </Text>
-            <Text style={styles.buttonStyle}>Create account</Text>
-            <Text style={styles.buttonStyle}>Support</Text>
-            <Text style={styles.buttonStyle}>About</Text>
+            <Text
+              style={styles.buttonStyle}
+              onPress={() => this.props.navigation.navigate("About")}
+            >
+              About
+            </Text>
+            <Text
+              style={styles.buttonStyle}
+              onPress={() => this.props.navigation.navigate("Contact")}
+            >
+              Contact
+            </Text>
+            {!authStore.user && (
+              <Text
+                style={styles.buttonStyle}
+                onPress={() => this.props.navigation.navigate("Login")}
+              >
+                Login
+              </Text>
+            )}
+            {authStore.user ? (
+              <Text
+                style={styles.buttonStyle}
+                onPress={() => authStore.logoutUser()}
+              >
+                Logout
+              </Text>
+            ) : (
+              <Text style={styles.buttonStyle}>Create account</Text>
+            )}
           </View>
         </Animated.View>
         <View
@@ -443,6 +474,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#353535"
   },
+  buttonStyleShop: {
+    fontWeight: "bold",
+    fontSize: 30,
+    color: "#34495e"
+  },
   container: {
     flex: 1,
     alignItems: "center",
@@ -470,4 +506,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withNavigation(Practice);
+export default withNavigation(Menu);
