@@ -49,7 +49,7 @@ class Login extends Component {
         <Button full onPress={() => this.handleLogin()}>
           <Text>Login</Text>
         </Button>
-        <Button full onPress={() => this.handleSignUp()}>
+        <Button transparent onPress={() => this.handleSignUp()}>
           <Text>You don't have an account? SignUp Now</Text>
         </Button>
       </Form>
