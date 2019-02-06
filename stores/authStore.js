@@ -5,7 +5,7 @@ import jwt_decode from "jwt-decode";
 import { navigation } from "react-navigation";
 
 const instance = axios.create({
-  baseURL: "http:/207.154.255.247/"
+  baseURL: "http://207.154.255.247/"
 });
 
 class Store {
