@@ -12,29 +12,31 @@ import authStore from "../../stores/authStore";
 import PreviousOrders from "../PreviousOrders";
 
 const instance = axios.create({
-  baseURL: "http:/207.154.255.247/"
+  // baseURL: "http://127.0.0.1:8000/"
+  baseURL: "http://207.154.255.247/"
 });
 
 class Profile extends React.Component {
-  constructor() {
+  constructor(props) {
+    super(props);
     this.state = {
-      username: ""
-      // email: "",
-      // first_name: "",
-      // last_name: "",
-      // phone_number: "",
-      // address: {
-      //   area: "",
-      //   block: "",
-      //   house: ""
-      // }
+      username: "",
+      email: "",
+      first_name: "",
+      last_name: "",
+      address: {
+        area: "",
+        block: "",
+        building: "",
+        phone_number: ""
+      }
     };
-    this.handleUsername = this.handleUsername.bind(this);
+    // this.handleUsername = this.handleUsername.bind(this);
   }
 
-  handleUsername(value) {
-    this.setState({ username: value });
-  }
+  // handleUsername(value) {
+  //   this.setState({ username: value });
+  // }
 
   handleLogout() {
     authStore.logoutUser(this.props.navigation);
@@ -44,12 +46,6 @@ class Profile extends React.Component {
     instance
       .get("api/profile/")
       .then(res => res.data)
-      // .then(() => {
-      //   this.username = "username";
-      //   this.email = "email";
-      //   this.first_name = "first_name";
-      //   this.last_name = "last_name";
-      // })
       .catch(err => console.log("Error!!"));
   }
 
@@ -66,8 +62,11 @@ class Profile extends React.Component {
             <Text style={styles.name}>Someone's Name</Text>
           </View>
           <Text style={styles.info}> Username: {this.state.username} </Text>
-          <Text style={styles.info}> Email:</Text>
-          <Text style={styles.info}> Phone Number:</Text>
+          <Text style={styles.info}> Email:{this.state.email}</Text>
+          <Text style={styles.info}>
+            {" "}
+            Phone Number:{this.state.phone_number}
+          </Text>
           <Text style={styles.info}> Address: </Text>
           <View style={styles.bodyContent}>
             <TouchableOpacity

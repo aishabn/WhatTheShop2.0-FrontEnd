@@ -6,17 +6,18 @@ import axios from "axios";
 import authStore from "../../stores/authStore";
 
 const instance = axios.create({
-  baseURL: "http:/207.154.255.247/"
+  //   baseURL: "http://127.0.0.1:8000/"
+  baseURL: "http://207.154.255.247/"
 });
 
 class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      first_name: "",
-      last_name: "",
       username: "",
       password: "",
+      first_name: "",
+      last_name: "",
       email: "",
       address: {
         area: "",
