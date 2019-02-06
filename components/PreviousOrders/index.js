@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
+import { Content, List } from "native-base";
 
 // NativeBase Components
-import { List, Content } from "native-base";
-import { withNavigation } from "react-navigate";
+
+import { withNavigation } from "react-navigation";
 
 // Store
-import CartStore from "../../store/cartStore";
+import CartStore from "../../stores/cartStore";
+import authStore from "../../stores/authStore";
 
 // Component
-import ProductItem from "./ProductItem";
-import items from "../data";
+
 import CartButton from "../CartButton";
 
 class PreviousOrder extends Component {
@@ -20,16 +21,14 @@ class PreviousOrder extends Component {
     headerRight: <CartButton route="Cart" />
   });
 
-  componentDidMount() {
-    return CartStore.fetchOrders();
-  }
-
   render() {
-    return {
-      /* <Content>
-        <List>{ListItems}</List>
-      </Content> */
-    };
+    let previousOrders;
+    if (authStore.user) {
+      CartStore.fetchOrders();
+      previousOrders = CartStore.previousOrders;
+    }
+    console.log("PREVIOUS ORDERS", previousOrders);
+    return <Content>{<List>{previousOrders}</List>}</Content>;
   }
 }
 

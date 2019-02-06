@@ -9,6 +9,9 @@ import CartItem from "./CartItem";
 import CartStore from "../../stores/cartStore";
 
 class ShopCart extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: "Cart"
+  });
   render() {
     const cartItems = CartStore.cartItems;
     let content;

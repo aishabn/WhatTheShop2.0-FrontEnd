@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Image } from "react-native";
+import { withNavigation } from "react-navigation";
+import CartButton from "../CartButton";
 // import field from "../media/field.jpg";
 import {
   Container,
@@ -14,7 +16,11 @@ import {
   Left,
   Body
 } from "native-base";
-export default class About extends Component {
+class About extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: "About",
+    headerRight: <CartButton route="Cart" />
+  });
   render() {
     return (
       <Container>
@@ -60,3 +66,5 @@ export default class About extends Component {
     );
   }
 }
+
+export default withNavigation(About);

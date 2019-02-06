@@ -336,8 +336,19 @@ class Menu extends Component {
                 Logout
               </Text>
             ) : (
-              <Text style={styles.buttonStyle}>Create account</Text>
+              <Text
+                style={styles.buttonStyle}
+                onPress={() => this.props.navigation.navigate("Register")}
+              >
+                Create account
+              </Text>
             )}
+            <Text
+              style={styles.buttonStyle}
+              onPress={() => this.props.navigation.navigate("Profile")}
+            >
+              Account
+            </Text>
           </View>
         </Animated.View>
         <View
