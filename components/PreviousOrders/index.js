@@ -24,7 +24,7 @@ class PreviousOrder extends Component {
   render() {
     let previousOrders;
     if (authStore.user) {
-      CartStore.fetchOrders();
+      CartStore.fetchPreviousOrders();
       previousOrders = CartStore.previousOrders;
     }
     console.log("PREVIOUS ORDERS", previousOrders);

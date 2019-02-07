@@ -12,8 +12,9 @@ const instance = axios.create({
 class Store {
   constructor() {
     this.user = null;
+    this.checkForToken();
   }
-
+  //use Toast for invalid data
   setAuthToken(token) {
     if (token) {
       // Apply to every request
@@ -23,7 +24,6 @@ class Store {
       delete axios.defaults.headers.common.Authorization;
     }
   }
-
   setCurrentUser(token) {
     if (token) {
       // Decode token to get user data
@@ -33,7 +33,6 @@ class Store {
       this.user = null;
     }
   }
-
   logoutUser(navigation) {
     return AsyncStorage.removeItem("jwtToken").then(
       () => {
