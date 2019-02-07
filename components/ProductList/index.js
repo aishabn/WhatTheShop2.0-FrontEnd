@@ -26,7 +26,11 @@ class ProductList extends Component {
     let ListItems;
     if (productList) {
       ListItems = productList.products.map(product => (
-        <ProductItem product={product} key={product.id} />
+        <ProductItem
+          product={product}
+          key={product.id}
+          navigation={this.props.navigation}
+        />
       ));
     }
     return (

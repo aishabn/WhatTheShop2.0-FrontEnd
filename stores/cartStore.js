@@ -3,6 +3,10 @@ import { Toast } from "native-base";
 import axios from "axios";
 
 const instance = axios.create({
+
+  // baseURL: "http://127.0.0.1:8000/"
+
+
   baseURL: "http://207.154.255.247/"
 });
 
@@ -11,6 +15,7 @@ class CartStore {
     this.cartItems = [];
     this.showToast = false;
     this.previousOrders = [];
+    this.fetchOrders();
   }
 
   fetchOrders() {
@@ -21,13 +26,24 @@ class CartStore {
       .catch(err => console.error(err));
   }
 
-  postOrder(newOrder) {
+  checkoutCart() {
     instance
-      .post("api/order/create/", newOrder)
+      .post("api/order/create/", this.cartItems)
       .then(res => res.data)
       .then(order => {
-        this.cartItems.push(order);
-        // this.loading = false;
+        this.previousOrders.push(order);
+        this.cartItems = [];
+        alert("order received!");
+      })
+      .catch(err => console.error(err));
+  }
+
+  cartItemCreate(cartItem) {
+    instance
+      .post("api/item/", cartItem)
+      .then(res => res.data)
+      .then(item => {
+        this.addItemToCart(item)
       })
       .catch(err => console.error(err));
   }
@@ -44,7 +60,7 @@ class CartStore {
         duration: 3000
       });
     } else {
-      this.cartItems.push(item);
+      this.cartItems.push({item);
       Toast.show({
         text: `${item.name} has been added to the list`,
         buttonText: "Okay",
@@ -57,11 +73,6 @@ class CartStore {
     this.cartItems = this.cartItems.filter(cartItem => cartItem !== item);
   }
 
-  checkoutCart(newOrder) {
-    this.cartItems = [];
-    this.postOrder(newOrder);
-    alert("order received!");
-  }
   get quantity() {
     let quantity = 0;
     this.cartItems.forEach(item => (quantity = quantity + item.quantity));

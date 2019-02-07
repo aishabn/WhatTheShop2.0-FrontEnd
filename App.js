@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import AppContainer from "./navigation/BottomTab";
+import AppContainer from "./navigation/MainStack";
 
 export default class App extends React.Component {
   render() {

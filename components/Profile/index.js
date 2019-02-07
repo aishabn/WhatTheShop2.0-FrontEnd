@@ -68,6 +68,13 @@ class Profile extends React.Component {
             Phone Number:{this.state.phone_number}
           </Text>
           <Text style={styles.info}> Address: </Text>
+          <Text
+            style={styles.info}
+            onPress={() => this.props.navigation.navigate("PreviousOrders")}
+          >
+            {" "}
+            Past Orders{" "}
+          </Text>
           <View style={styles.bodyContent}>
             <TouchableOpacity
               style={styles.buttonContainer}
