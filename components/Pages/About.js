@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Image } from "react-native";
 import { withNavigation } from "react-navigation";
+import { Tile } from "react-native-elements";
+
 import CartButton from "../CartButton";
 // import field from "../media/field.jpg";
 import {
@@ -39,7 +41,10 @@ class About extends Component {
             <CardItem>
               <Body>
                 <Image
-                  source={{ uri: "https://unsplash.com/photos/52p1K0d0euM" }}
+                  source={{
+                    uri:
+                      "https://images.unsplash.com/photo-1474546652694-a33dd8161d66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1524&q=80"
+                  }}
                   style={{ height: 200, width: 200, flex: 1 }}
                 />
                 <Text>
