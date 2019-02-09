@@ -3,13 +3,14 @@ import { observer } from "mobx-react";
 
 // NativeBase Components
 import { List, Content } from "native-base";
-import { withNavigation } from "react-navigate";
+import { withNavigation } from "react-navigation";
 
 // Store
-import CartStore from "../../store/cartStore";
+import CartStore from "../../stores/cartStore";
 
 // Component
-import ProductItem from "./ProductItem";
+// import ProductItem from "../ProductItem";
+
 import items from "../data";
 import CartButton from "../CartButton";
 

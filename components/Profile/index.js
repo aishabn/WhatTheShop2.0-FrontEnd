@@ -31,115 +31,100 @@ class Profile extends React.Component {
         phone_number: ""
       }
     };
-    // this.handleUsername = this.handleUsername.bind(this);
   }
-
-  // handleUsername(value) {
-  //   this.setState({ username: value });
-  // }
-
+  componentDidMount() {
+    authStore.userProfileData();
+  }
   handleLogout() {
     authStore.logoutUser(this.props.navigation);
-  }
-
-  userProfileData() {
-    instance
-      .get("api/profile/")
-      .then(res => res.data)
-      .catch(err => console.log("Error!!"));
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header} />
-        <Image
-          style={styles.avatar}
-          source={{ uri: "https://bootdey.com/img/Content/avatar/avatar6.png" }}
-        />
-        <View style={styles.body}>
-          <View style={styles.bodyContent}>
-            <Text style={styles.name}>Someone's Name</Text>
-          </View>
-          <Text style={styles.info}> Username: {this.state.username} </Text>
-          <Text style={styles.info}> Email:{this.state.email}</Text>
-          <Text style={styles.info}>
-            {" "}
-            Phone Number:{this.state.phone_number}
-          </Text>
-          <Text style={styles.info}> Address: </Text>
-          <View style={styles.bodyContent}>
-            <TouchableOpacity
-              style={styles.buttonContainer}
-              onPress={() => this.handleLogout()}
-            >
-              <Text>LOGOUT</Text>
-            </TouchableOpacity>
-          </View>
+        <Text style={styles.name}>Someone's Name</Text>
+        <Text style={styles.info}> Usename: </Text>
+        <Text style={styles.infoPart2}> Email:</Text>
+        <Text style={styles.infoPart5}> Address</Text>
+        <Text style={styles.infoPart2}> Area: </Text>
+        <Text style={styles.infoPart2}> Block:</Text>
+        <Text style={styles.infoPart2}> Street:</Text>
+        <Text style={styles.infoPart2}> Building:</Text>
+        <Text style={styles.infoPart2}> Phone Number:</Text>
+        <View style={styles.bodyContent}>
+          <Button
+            bordered
+            dark
+            style={styles.buttonContainer}
+            onPress={() => this.handleLogout()}
+          >
+            <Text>LOGOUT</Text>
+          </Button>
         </View>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "#e6b3b3",
-    height: 150
-  },
-  avatar: {
-    width: 130,
-    height: 130,
-    borderRadius: 63,
-    borderWidth: 4,
-    borderColor: "white",
-    marginBottom: 10,
-    alignSelf: "center",
-    position: "absolute",
-    marginTop: 90
-  },
-  name: {
-    fontSize: 22,
-    color: "#FFFFFF",
-    fontWeight: "600"
-  },
   body: {
     marginTop: 40
   },
   bodyContent: {
     // flex: 1,
     alignItems: "center",
-    padding: 30
+    padding: 10
   },
   name: {
-    fontSize: 28,
-    color: "#696969",
+    fontSize: 18,
+    color: "#ffffff",
+    marginTop: 40,
+    textAlign: "center",
     fontWeight: "600",
-    marginTop: 10
+    backgroundColor: "#353535"
   },
   info: {
     fontSize: 16,
-    color: "black",
-    marginTop: 15,
+    color: "#34495e",
+    marginTop: 20,
     textAlign: "left",
     marginLeft: 10,
     marginBottom: 20
   },
+  infoPart2: {
+    fontSize: 16,
+    color: "#34495e",
+    marginTop: 25,
+    textAlign: "left",
+    marginLeft: 10,
+    marginBottom: 20
+  },
+  infoPart5: {
+    fontSize: 18,
+    color: "#ffffff",
+    marginTop: 25,
+    textAlign: "center",
+    marginBottom: 20,
+    fontWeight: "600",
+    backgroundColor: "#353535"
+  },
   description: {
     fontSize: 16,
-    color: "black",
+    color: "#34495e",
     marginTop: 10,
     textAlign: "left"
   },
   buttonContainer: {
-    marginTop: 40,
-    height: 45,
+    fontSize: 18,
+    fontWeight: "600",
+    marginTop: 50,
+    marginLeft: 128,
+    // height: 55,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10,
-    width: 250,
-    borderRadius: 30,
-    backgroundColor: "#b3b3b3"
+    marginBottom: 10
+    // width: 250
+    // borderRadius: 30
   }
 });
 

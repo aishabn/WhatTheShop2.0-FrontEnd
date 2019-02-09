@@ -12,6 +12,15 @@ const instance = axios.create({
 class Store {
   constructor() {
     this.user = null;
+    this.profile = null;
+  }
+
+  userProfileData() {
+    instance
+      .get(`api/profile/${this.user.user_id}`)
+      .then(res => res.data)
+      .then(profile => console.log(this.profile))
+      .catch(err => console.log("Error!!"));
   }
 
   setAuthToken(token) {
@@ -29,6 +38,7 @@ class Store {
       // Decode token to get user data
       const decodedUser = jwt_decode(token);
       this.user = decodedUser;
+      console.log("decoded user is: ", this.user);
     } else {
       this.user = null;
     }

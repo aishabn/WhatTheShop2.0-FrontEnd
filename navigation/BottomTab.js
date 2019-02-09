@@ -9,6 +9,7 @@ import Cart from "../components/Cart";
 import Menu from "../components/Menu/index";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import Profile from "../components/Profile";
 import About from "../components/Pages/About";
 import Contact from "../components/Pages/Contact";
 
@@ -21,6 +22,7 @@ const MenuStack = createStackNavigator(
     Menu: Menu,
     Login: Login,
     Register: Register,
+    Profile: Profile,
     About: About,
     Contact: Contact
   },
