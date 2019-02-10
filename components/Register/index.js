@@ -7,7 +7,7 @@ import authStore from "../../stores/authStore";
 
 const instance = axios.create({
   //   baseURL: "http://127.0.0.1:8000/"
-  baseURL: "http://207.154.255.247/"
+  baseURL: "http://207.154.255.247"
 });
 
 class Register extends Component {
@@ -80,35 +80,51 @@ class Register extends Component {
           <Input
             placeholder="Area"
             autoCapitalize="none"
-            onChangeText={area => this.setState({ area })}
+            onChangeText={area =>
+              this.setState({
+                address: { ...this.state.address, area }
+              })
+            }
           />
         </Item>
         <Item>
           <Input
             placeholder="Block"
             autoCapitalize="none"
-            onChangeText={block => this.setState({ block })}
+            onChangeText={block =>
+              this.setState({
+                address: { ...this.state.address, block: block }
+              })
+            }
           />
         </Item>
         <Item>
           <Input
             placeholder="Street"
             autoCapitalize="none"
-            onChangeText={street => this.setState({ street })}
+            onChangeText={street =>
+              this.setState({ address: { ...this.state.address, street } })
+            }
           />
         </Item>
         <Item>
           <Input
             placeholder="Building"
             autoCapitalize="none"
-            onChangeText={building => this.setState({ building })}
+            onChangeText={building =>
+              this.setState({ address: { ...this.state.address, building } })
+            }
           />
         </Item>
         <Item last>
           <Input
             placeholder="Phone_number"
             autoCapitalize="none"
-            onChangeText={phone_number => this.setState({ phone_number })}
+            onChangeText={phone_number =>
+              this.setState({
+                address: { ...this.state.address, phone_number }
+              })
+            }
           />
         </Item>
         <Button full onPress={() => this.handleRegister()}>

@@ -5,14 +5,27 @@ import jwt_decode from "jwt-decode";
 import { navigation } from "react-navigation";
 
 const instance = axios.create({
-  baseURL: "http://127.0.0.1:8000/"
-  // baseURL: "http://207.154.255.247/"
+  baseURL: "http://207.154.255.247"
 });
 
 class Store {
   constructor() {
     this.user = null;
-    this.checkForToken();
+    this.profile = null;
+    this.loading = true;
+  }
+
+  userProfileData() {
+    this.loading = true;
+    instance
+      .get("api/profile/")
+      .then(res => res.data)
+      .then(profile => {
+        this.profile = profile;
+        this.loading = false;
+        console.log(this.profile);
+      })
+      .catch(err => console.log("Error!!"));
   }
   //use Toast for invalid data
   setAuthToken(token) {
@@ -29,6 +42,7 @@ class Store {
       // Decode token to get user data
       const decodedUser = jwt_decode(token);
       this.user = decodedUser;
+      console.log("decoded user is: ", this.user);
     } else {
       this.user = null;
     }
@@ -69,6 +83,8 @@ class Store {
   }
 
   registerUser(userData, navigation) {
+    console.log(userData);
+
     instance
       .post("api/register/", userData)
       .then(res => res.data)
@@ -104,7 +120,8 @@ class Store {
 }
 
 decorate(Store, {
-  user: observable
+  user: observable,
+  loading: observable
 });
 
 export default new Store();

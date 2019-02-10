@@ -3,15 +3,14 @@ import { observer } from "mobx-react";
 import { Content, List } from "native-base";
 
 // NativeBase Components
-
 import { withNavigation } from "react-navigation";
 
 // Store
 import CartStore from "../../stores/cartStore";
+
+// import ProductItem from "../ProductItem";
+import items from "../data";
 import authStore from "../../stores/authStore";
-
-// Component
-
 import CartButton from "../CartButton";
 
 class PreviousOrder extends Component {
