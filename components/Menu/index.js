@@ -336,14 +336,7 @@ class Menu extends Component {
               >
                 Logout
               </Text>
-            ) : (
-              <Text
-                style={styles.buttonStyle}
-                onPress={() => this.props.navigation.navigate("Register")}
-              >
-                Create account
-              </Text>
-            )}
+            ) : null}
             {authStore.user ? (
               <Text
                 style={styles.buttonStyle}

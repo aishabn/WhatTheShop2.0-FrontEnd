@@ -77,7 +77,7 @@ class Store {
 
         return AsyncStorage.setItem("jwtToken", token).then(
           () => {
-            navigation.replace("Profile");
+            navigation.replace("CL");
           },
           () => console.log("something went wrong with setting jwt token")
         );
