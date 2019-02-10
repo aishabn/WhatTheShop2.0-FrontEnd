@@ -19,6 +19,7 @@ class ProductItem extends Component {
         featured
         caption={this.props.product.price}
         onPress={() => this.handlePress()}
+        containerStyle={styles.border}
       />
     );
   }
