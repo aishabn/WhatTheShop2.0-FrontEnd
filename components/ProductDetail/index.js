@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
 import NumericInput from "react-native-numeric-input";
+import styles from "./styles";
 
 // NativeBase Components
 import {
@@ -19,6 +20,8 @@ import {
   Row,
   Input
 } from "native-base";
+
+import { Image } from "react-native";
 
 // Style
 
@@ -56,38 +59,40 @@ class ProductDetail extends Component {
     return (
       <Root>
         <Content>
-          <List>
-            <ListItem>
-              <Left>
-                <Text>
-                  {itemDetail.name + "\n"}
-                  <Text note>{itemDetail.description}</Text>
-                </Text>
-              </Left>
-              <Body />
-              <Right>
-                <Thumbnail bordered source={{ uri: itemDetail.img }} />
-              </Right>
-            </ListItem>
-            <ListItem>
-              <Left />
-            </ListItem>
-            <NumericInput
-              type="plus-minus"
-              maxValue={10}
-              minValue={1}
-              step={1}
-              valueType="integer"
-              editable={false}
-              initValue={this.state.quantity}
-              value={this.state.quantity}
-              onChange={value => this.setState({ quantity: value })}
-            />
+          <Left>
+            <Text style={styles.title}>
+              {itemDetail.name + "\n"}
+              <Text style={styles.description} note>
+                {itemDetail.description}
+              </Text>
+            </Text>
+          </Left>
+
+          <Body />
+          <Image
+            bordered
+            source={{ uri: itemDetail.img }}
+            style={{ width: 300, height: 300 }}
+          />
+          <Body>
+            <Left>
+              <NumericInput
+                type="plus-minus"
+                maxValue={10}
+                minValue={1}
+                step={1}
+                valueType="integer"
+                editable={false}
+                initValue={this.state.quantity}
+                value={this.state.quantity}
+                onChange={value => this.setState({ quantity: value })}
+              />
+            </Left>
 
             <Button full danger onPress={() => this.handleAdd()}>
               <Text>Add</Text>
             </Button>
-          </List>
+          </Body>
         </Content>
       </Root>
     );

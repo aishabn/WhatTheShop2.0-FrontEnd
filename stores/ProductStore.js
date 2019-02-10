@@ -1,5 +1,6 @@
 import { decorate, observable, computed } from "mobx";
 import axios from "axios";
+import { Toast } from "native-base";
 
 const instance = axios.create({
   baseURL: "http://207.154.255.247"
@@ -22,7 +23,7 @@ class ProductStore {
         // this.loading = false;
         console.log(product);
       })
-      .catch(err => console.error(err));
+      .catch(err => console.log(err));
   }
 }
 

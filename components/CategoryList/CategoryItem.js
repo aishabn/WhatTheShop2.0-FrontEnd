@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { withNavigation } from "react-navigation";
-import { Image } from "react-native";
+import { Tile } from "react-native-elements";
+
+import { StyleSheet, Dimensions, ImageBackground } from "react-native";
 import {
   Container,
   Header,
@@ -13,10 +15,11 @@ import {
   Icon,
   Left,
   Body,
-  Right
+  Right,
+  Image,
+  View
 } from "native-base";
-
-import items from "../data";
+import { white } from "ansi-colors";
 
 class CategoryItem extends Component {
   handlePress() {
@@ -27,32 +30,39 @@ class CategoryItem extends Component {
 
   render() {
     return (
-      <Container>
-        <Header />
-        <Content>
-          <Card>
-            <CardItem>
-              <Left>
-                <Body>
-                  <Text>{this.props.product.name}</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem cardBody>
-              <Image
-                source={{ uri: this.props.product.img }}
-                style={{ height: 200, width: null, flex: 1 }}
-              />
-              <Button onPress={() => this.handlePress()}>
-                <Text>PRESS</Text>
-              </Button>
-            </CardItem>
-          </Card>
-        </Content>
-      </Container>
+      <ImageBackground
+        source={{ uri: this.props.product.img }}
+        style={styles.child}
+      >
+        <View style={styles.child}>
+          <Text style={styles.text} onPress={() => this.handlePress()}>
+            {this.props.product.name}
+          </Text>
+        </View>
+      </ImageBackground>
     );
   }
 }
+export const { width, height } = Dimensions.get("window");
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    height: height * 0.95
+  },
+  child: {
+    height: height,
+    width,
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF30"
+  },
+  text: {
+    fontSize: 100,
+    textAlign: "center",
+
+    color: "white"
+  }
+});
 
 export default withNavigation(CategoryItem);
 
@@ -79,3 +89,38 @@ export default withNavigation(CategoryItem);
 // }
 
 // export default withNavigation(CategoryItem);
+
+// {
+/* <Container>
+  <Header />
+  <Content>
+    <Card>
+      <CardItem>
+        <Left>
+          <Body>
+            <Text>{this.props.product.name}</Text>
+          </Body>
+        </Left>
+      </CardItem>
+      <CardItem cardBody>
+        <Image
+          source={{ uri: this.props.product.img }}
+          style={{ height: 200, width: null, flex: 1 }}
+        />
+        <Button onPress={() => this.handlePress()}>
+          <Text>PRESS</Text>
+        </Button>
+      </CardItem>
+    </Card>
+  </Content>
+</Container>; */
+// }
+
+{
+  /* <Tile
+        imageSrc={require("../media/field.jpg")}
+        title={this.props.product.name}
+        featured
+        onPress={() => this.handlePress()}
+      /> */
+}

@@ -12,10 +12,11 @@ import {
 import { Constants } from "expo";
 import { withNavigation } from "react-navigation";
 import authStore from "../../stores/authStore";
+import logo from "../media/logo.png";
 
 const { width, height } = Dimensions.get("window");
 const DURATION = 400;
-const LOGO_SIZE = 130;
+const LOGO_SIZE = 400;
 const ICON_SIZE = 30;
 const CLOSE_MODE = 200;
 const ICON_LINE_HEIGHT = 2;
@@ -386,11 +387,8 @@ class Menu extends Component {
             ]}
           />
         </View>
-        {/* <Animated.Image
-          source={{
-            uri:
-              "https://ui8.s3.amazonaws.com/v5/assets/global/touch-icon-ipad-retina.png"
-          }}
+        <Animated.Image
+          source={require("../media/logo.png")}
           style={[
             StyleSheet.absoluteFill,
             styles.image,
@@ -403,7 +401,7 @@ class Menu extends Component {
               ]
             }
           ]}
-        /> */}
+        />
 
         <TouchableWithoutFeedback
           onPress={() => {
@@ -498,10 +496,10 @@ const styles = StyleSheet.create({
     width: width * 3
   },
   top: {
-    // backgroundColor: 'green'
+    backgroundColor: "#E7E7E7"
   },
   bottom: {
-    // backgroundColor: 'red',
+    backgroundColor: "#E7E7E7"
   },
   paragraph: {
     margin: 24,
