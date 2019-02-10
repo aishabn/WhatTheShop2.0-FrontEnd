@@ -3,7 +3,9 @@ import { Toast } from "native-base";
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://207.154.255.247"
+
+ baseURL: "http://207.154.255.247/"
+
 });
 
 class CartStore {
@@ -33,6 +35,7 @@ class CartStore {
       .then(() => {
         this.cartItems.forEach(item => this.previousOrders.push(item));
       })
+      .then((this.cartItems = []))
       .then(alert("order received!"))
       .catch(err => console.error(err));
   }
@@ -51,7 +54,6 @@ class CartStore {
           duration: 3000
         });
       })
-      .then((this.cartItems = []))
       //use for invalid authentication
       .catch(err =>
         Toast.show({
@@ -69,17 +71,11 @@ class CartStore {
     if (foundItem) {
       foundItem.quantity += item.quantity;
       console.log("CART ITEMS 1: ", this.cartItems);
-      this.apiCartCreate({
-        item: foundItem.id,
-        quantity: foundItem.quantity
-      });
+      this.apiCartCreate(item);
     } else {
       this.cartItems.push(item);
       console.log("CART ITEMS 2: ", this.cartItems);
-      this.apiCartCreate({
-        item: item.id,
-        quantity: item.quantity
-      });
+      this.apiCartCreate(item);
       Toast.show({
         text: `${item.name} has been added to the list`,
         buttonText: "Okay",
