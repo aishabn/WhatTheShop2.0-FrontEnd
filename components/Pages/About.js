@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Image } from "react-native";
 import { withNavigation } from "react-navigation";
-import { Tile } from "react-native-elements";
 
 import CartButton from "../CartButton";
 // import field from "../media/field.jpg";

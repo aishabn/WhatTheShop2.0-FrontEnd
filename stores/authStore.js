@@ -13,7 +13,21 @@ const instance = axios.create({
 class Store {
   constructor() {
     this.user = null;
-    this.checkForToken();
+    this.profile = null;
+    this.loading = true;
+  }
+
+  userProfileData() {
+    this.loading = true;
+    instance
+      .get("api/profile/")
+      .then(res => res.data)
+      .then(profile => {
+        this.profile = profile;
+        this.loading = false;
+        console.log(this.profile);
+      })
+      .catch(err => console.log("Error!!"));
   }
   //use Toast for invalid data
   setAuthToken(token) {
@@ -30,6 +44,7 @@ class Store {
       // Decode token to get user data
       const decodedUser = jwt_decode(token);
       this.user = decodedUser;
+      console.log("decoded user is: ", this.user);
     } else {
       this.user = null;
     }
@@ -70,6 +85,8 @@ class Store {
   }
 
   registerUser(userData, navigation) {
+    console.log(userData);
+
     instance
       .post("api/register/", userData)
       .then(res => res.data)
@@ -105,7 +122,8 @@ class Store {
 }
 
 decorate(Store, {
-  user: observable
+  user: observable,
+  loading: observable
 });
 
 export default new Store();

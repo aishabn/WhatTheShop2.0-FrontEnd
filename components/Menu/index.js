@@ -344,12 +344,14 @@ class Menu extends Component {
                 Create account
               </Text>
             )}
-            <Text
-              style={styles.buttonStyle}
-              onPress={() => this.props.navigation.navigate("Profile")}
-            >
-              Account
-            </Text>
+            {authStore.user ? (
+              <Text
+                style={styles.buttonStyle}
+                onPress={() => this.props.navigation.navigate("Profile")}
+              >
+                My Profile
+              </Text>
+            ) : null}
           </View>
         </Animated.View>
         <View

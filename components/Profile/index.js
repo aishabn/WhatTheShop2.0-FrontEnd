@@ -8,145 +8,129 @@ import { Card, CardItem, Text, Button, Body } from "native-base";
 import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 
 import authStore from "../../stores/authStore";
-
-import PreviousOrders from "../PreviousOrders";
+import Loading from "../Loading/loading";
 
 const instance = axios.create({
   // baseURL: "http://127.0.0.1:8000/"
-  baseURL: "http://207.154.255.247/"
+  // baseURL: "http://192.168.8.102:8000"
+  baseURL: "http://207.154.255.247"
 });
 
 class Profile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      email: "",
-      first_name: "",
-      last_name: "",
-      address: {
-        area: "",
-        block: "",
-        building: "",
-        phone_number: ""
-      }
-    };
-    // this.handleUsername = this.handleUsername.bind(this);
+  componentDidMount() {
+    authStore.userProfileData();
   }
-
-  // handleUsername(value) {
-  //   this.setState({ username: value });
-  // }
-
   handleLogout() {
     authStore.logoutUser(this.props.navigation);
   }
 
-  userProfileData() {
-    instance
-      .get("api/profile/")
-      .then(res => res.data)
-      .catch(err => console.log("Error!!"));
-  }
-
   render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.header} />
-        <Image
-          style={styles.avatar}
-          source={{ uri: "https://bootdey.com/img/Content/avatar/avatar6.png" }}
-        />
-        <View style={styles.body}>
-          <View style={styles.bodyContent}>
-            <Text style={styles.name}>Someone's Name</Text>
-          </View>
-          <Text style={styles.info}> Username: {this.state.username} </Text>
-          <Text style={styles.info}> Email:{this.state.email}</Text>
-          <Text style={styles.info}>
-            {" "}
-            Phone Number:{this.state.phone_number}
+    const userProfile = authStore.profile;
+
+    if (authStore.loading) {
+      return <Loading />;
+    } else {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.name}>
+            {userProfile.first_name} {userProfile.last_name}
           </Text>
-          <Text style={styles.info}> Address: </Text>
-          <Text
-            style={styles.info}
-            onPress={() => this.props.navigation.navigate("PreviousOrders")}
-          >
+          <Text style={styles.info}> Usename: {userProfile.username}</Text>
+          <Text style={styles.infoPart2}> Email: {userProfile.email}</Text>
+          <Text style={styles.infoPart5}> Address</Text>
+          <Text style={styles.infoPart2}>Area: {userProfile.address.area}</Text>
+          <Text style={styles.infoPart2}>
             {" "}
-            Past Orders{" "}
+            Block:{userProfile.address.block}
+          </Text>
+          <Text style={styles.infoPart2}>
+            {" "}
+            Street:{userProfile.address.street}
+          </Text>
+          <Text style={styles.infoPart2}>
+            {" "}
+            Building:{userProfile.address.building}
+          </Text>
+          <Text style={styles.infoPart2}>
+            {" "}
+            Phone Number:{userProfile.address.phone_number}
           </Text>
           <View style={styles.bodyContent}>
-            <TouchableOpacity
+            <Button
+              bordered
+              dark
               style={styles.buttonContainer}
               onPress={() => this.handleLogout()}
             >
               <Text>LOGOUT</Text>
-            </TouchableOpacity>
+            </Button>
           </View>
         </View>
-      </View>
-    );
+      );
+    }
   }
 }
+
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "#e6b3b3",
-    height: 150
-  },
-  avatar: {
-    width: 130,
-    height: 130,
-    borderRadius: 63,
-    borderWidth: 4,
-    borderColor: "white",
-    marginBottom: 10,
-    alignSelf: "center",
-    position: "absolute",
-    marginTop: 90
-  },
-  name: {
-    fontSize: 22,
-    color: "#FFFFFF",
-    fontWeight: "600"
-  },
   body: {
     marginTop: 40
   },
   bodyContent: {
     // flex: 1,
     alignItems: "center",
-    padding: 30
+    padding: 10
   },
   name: {
-    fontSize: 28,
-    color: "#696969",
+    fontSize: 18,
+    color: "#ffffff",
+    marginTop: 40,
+    textAlign: "center",
     fontWeight: "600",
-    marginTop: 10
+    backgroundColor: "#353535"
   },
   info: {
     fontSize: 16,
-    color: "black",
-    marginTop: 15,
+    color: "#34495e",
+    marginTop: 20,
     textAlign: "left",
     marginLeft: 10,
     marginBottom: 20
   },
+  infoPart2: {
+    fontSize: 16,
+    color: "#34495e",
+    marginTop: 25,
+    textAlign: "left",
+    marginLeft: 10,
+    marginBottom: 20
+  },
+  infoPart5: {
+    fontSize: 18,
+    color: "#ffffff",
+    marginTop: 25,
+    textAlign: "center",
+    marginBottom: 20,
+    fontWeight: "600",
+    backgroundColor: "#353535"
+  },
   description: {
     fontSize: 16,
-    color: "black",
+    color: "#34495e",
     marginTop: 10,
     textAlign: "left"
   },
   buttonContainer: {
-    marginTop: 40,
-    height: 45,
+    fontSize: 18,
+    fontWeight: "600",
+    marginTop: 50,
+    marginLeft: 128,
+    // height: 55,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10,
-    width: 250,
-    borderRadius: 30,
-    backgroundColor: "#b3b3b3"
+    marginBottom: 10
+    // width: 250
+    // borderRadius: 30
   }
 });
 
