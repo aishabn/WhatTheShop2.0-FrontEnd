@@ -1,24 +1,9 @@
 import React, { Component } from "react";
 import { withNavigation } from "react-navigation";
 import { Image } from "react-native";
-import {
-  Container,
-  Header,
-  Content,
-  Card,
-  CardItem,
-  Thumbnail,
-  Text,
-  Button,
-  Icon,
-  Left,
-  Body,
-  Right,
-  Tile,
-  Subtitle,
-  Heading,
-  Title
-} from "native-base";
+import { Tile, Button } from "react-native-elements";
+import styles from "./styles";
+import { View } from "native-base";
 
 class ProductItem extends Component {
   handlePress() {
@@ -28,7 +13,41 @@ class ProductItem extends Component {
   }
   render() {
     return (
-      <Container>
+      <Tile
+        imageSrc={{ uri: this.props.product.img }}
+        title={this.props.product.name}
+        featured
+        caption={this.props.product.price}
+        onPress={() => this.handlePress()}
+      />
+    );
+  }
+}
+
+export default ProductItem;
+
+{
+  /* <Image
+        styleName="featured"
+        source={{
+          uri: "https://shoutem.github.io/img/ui-toolkit/examples/image-11.png"
+        }}
+      >
+        <Tile>
+          <Title styleName="md-gutter-top" />
+          <Subtitle styleName="line-through sm-gutter-top" />
+          <Heading />
+          <Text note>Price:{this.props.product.price}</Text>
+          <Button styleName="md-gutter-top">
+            <Icon name="cart" />
+            <Text>ADD TO BASKET</Text>
+          </Button>
+        </Tile>
+      </Image> */
+}
+
+{
+  /* <Container>
         <Header />
         <Content>
           <Card>
@@ -70,29 +89,5 @@ class ProductItem extends Component {
             </CardItem>
           </Card>
         </Content>
-      </Container>
-    );
-  }
-}
-
-export default ProductItem;
-
-{
-  /* <Image
-        styleName="featured"
-        source={{
-          uri: "https://shoutem.github.io/img/ui-toolkit/examples/image-11.png"
-        }}
-      >
-        <Tile>
-          <Title styleName="md-gutter-top" />
-          <Subtitle styleName="line-through sm-gutter-top" />
-          <Heading />
-          <Text note>Price:{this.props.product.price}</Text>
-          <Button styleName="md-gutter-top">
-            <Icon name="cart" />
-            <Text>ADD TO BASKET</Text>
-          </Button>
-        </Tile>
-      </Image> */
+      </Container> */
 }

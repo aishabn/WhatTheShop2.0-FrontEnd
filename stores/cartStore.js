@@ -5,6 +5,7 @@ import axios from "axios";
 const instance = axios.create({
   // baseURL: "http://127.0.0.1:8000/"
   baseURL: "http://207.154.255.247/"
+  // baseURL: "http://192.168.8.101:8000"
 });
 
 class CartStore {

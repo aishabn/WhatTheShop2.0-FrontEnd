@@ -20,6 +20,8 @@ import {
   Input
 } from "native-base";
 
+import { Image } from "react-native";
+
 // Style
 
 //Store
@@ -56,38 +58,34 @@ class ProductDetail extends Component {
     return (
       <Root>
         <Content>
-          <List>
-            <ListItem>
-              <Left>
-                <Text>
-                  {itemDetail.name + "\n"}
-                  <Text note>{itemDetail.description}</Text>
-                </Text>
-              </Left>
-              <Body />
-              <Right>
-                <Thumbnail bordered source={{ uri: itemDetail.img }} />
-              </Right>
-            </ListItem>
-            <ListItem>
-              <Left />
-            </ListItem>
-            <NumericInput
-              type="plus-minus"
-              maxValue={10}
-              minValue={1}
-              step={1}
-              valueType="integer"
-              editable={false}
-              initValue={this.state.quantity}
-              value={this.state.quantity}
-              onChange={value => this.setState({ quantity: value })}
-            />
+          <Left>
+            <Text>
+              {itemDetail.name + "\n"}
+              <Text note>{itemDetail.description}</Text>
+            </Text>
+          </Left>
+          <Body />
+          <Image
+            bordered
+            source={{ uri: itemDetail.img }}
+            style={{ width: 300, height: 300 }}
+          />
 
-            <Button full danger onPress={() => this.handleAdd()}>
-              <Text>Add</Text>
-            </Button>
-          </List>
+          <NumericInput
+            type="plus-minus"
+            maxValue={10}
+            minValue={1}
+            step={1}
+            valueType="integer"
+            editable={false}
+            initValue={this.state.quantity}
+            value={this.state.quantity}
+            onChange={value => this.setState({ quantity: value })}
+          />
+
+          <Button full danger onPress={() => this.handleAdd()}>
+            <Text>Add</Text>
+          </Button>
         </Content>
       </Root>
     );
