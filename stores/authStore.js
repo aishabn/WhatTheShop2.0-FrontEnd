@@ -5,24 +5,29 @@ import jwt_decode from "jwt-decode";
 import { navigation } from "react-navigation";
 
 const instance = axios.create({
-  // baseURL: "http://127.0.0.1:8000/"
-  baseURL: "http://207.154.255.247/"
+  baseURL: "http://207.154.255.247"
 });
 
 class Store {
   constructor() {
     this.user = null;
     this.profile = null;
+    this.loading = true;
   }
 
   userProfileData() {
+    this.loading = true;
     instance
-      .get(`api/profile/${this.user.user_id}`)
+      .get("api/profile/")
       .then(res => res.data)
-      .then(profile => console.log(this.profile))
+      .then(profile => {
+        this.profile = profile;
+        this.loading = false;
+        console.log(this.profile);
+      })
       .catch(err => console.log("Error!!"));
   }
-
+  //use Toast for invalid data
   setAuthToken(token) {
     if (token) {
       // Apply to every request
@@ -32,7 +37,6 @@ class Store {
       delete axios.defaults.headers.common.Authorization;
     }
   }
-
   setCurrentUser(token) {
     if (token) {
       // Decode token to get user data
@@ -43,7 +47,6 @@ class Store {
       this.user = null;
     }
   }
-
   logoutUser(navigation) {
     return AsyncStorage.removeItem("jwtToken").then(
       () => {
@@ -80,6 +83,8 @@ class Store {
   }
 
   registerUser(userData, navigation) {
+    console.log(userData);
+
     instance
       .post("api/register/", userData)
       .then(res => res.data)
@@ -115,7 +120,8 @@ class Store {
 }
 
 decorate(Store, {
-  user: observable
+  user: observable,
+  loading: observable
 });
 
 export default new Store();

@@ -343,6 +343,14 @@ class Menu extends Component {
                 Create account
               </Text>
             )}
+            {authStore.user ? (
+              <Text
+                style={styles.buttonStyle}
+                onPress={() => this.props.navigation.navigate("Profile")}
+              >
+                My Profile
+              </Text>
+            ) : null}
           </View>
         </Animated.View>
         <View

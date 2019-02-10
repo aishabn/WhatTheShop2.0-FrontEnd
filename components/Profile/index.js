@@ -8,30 +8,15 @@ import { Card, CardItem, Text, Button, Body } from "native-base";
 import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 
 import authStore from "../../stores/authStore";
-
-import PreviousOrders from "../PreviousOrders";
+import Loading from "../Loading/loading";
 
 const instance = axios.create({
   // baseURL: "http://127.0.0.1:8000/"
-  baseURL: "http://207.154.255.247/"
+  // baseURL: "http://192.168.8.102:8000"
+  baseURL: "http://207.154.255.247"
 });
 
 class Profile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      email: "",
-      first_name: "",
-      last_name: "",
-      address: {
-        area: "",
-        block: "",
-        building: "",
-        phone_number: ""
-      }
-    };
-  }
   componentDidMount() {
     authStore.userProfileData();
   }
@@ -40,31 +25,52 @@ class Profile extends React.Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.name}>Someone's Name</Text>
-        <Text style={styles.info}> Usename: </Text>
-        <Text style={styles.infoPart2}> Email:</Text>
-        <Text style={styles.infoPart5}> Address</Text>
-        <Text style={styles.infoPart2}> Area: </Text>
-        <Text style={styles.infoPart2}> Block:</Text>
-        <Text style={styles.infoPart2}> Street:</Text>
-        <Text style={styles.infoPart2}> Building:</Text>
-        <Text style={styles.infoPart2}> Phone Number:</Text>
-        <View style={styles.bodyContent}>
-          <Button
-            bordered
-            dark
-            style={styles.buttonContainer}
-            onPress={() => this.handleLogout()}
-          >
-            <Text>LOGOUT</Text>
-          </Button>
+    const userProfile = authStore.profile;
+
+    if (authStore.loading) {
+      return <Loading />;
+    } else {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.name}>
+            {userProfile.first_name} {userProfile.last_name}
+          </Text>
+          <Text style={styles.info}> Usename: {userProfile.username}</Text>
+          <Text style={styles.infoPart2}> Email: {userProfile.email}</Text>
+          <Text style={styles.infoPart5}> Address</Text>
+          <Text style={styles.infoPart2}>Area: {userProfile.address.area}</Text>
+          <Text style={styles.infoPart2}>
+            {" "}
+            Block:{userProfile.address.block}
+          </Text>
+          <Text style={styles.infoPart2}>
+            {" "}
+            Street:{userProfile.address.street}
+          </Text>
+          <Text style={styles.infoPart2}>
+            {" "}
+            Building:{userProfile.address.building}
+          </Text>
+          <Text style={styles.infoPart2}>
+            {" "}
+            Phone Number:{userProfile.address.phone_number}
+          </Text>
+          <View style={styles.bodyContent}>
+            <Button
+              bordered
+              dark
+              style={styles.buttonContainer}
+              onPress={() => this.handleLogout()}
+            >
+              <Text>LOGOUT</Text>
+            </Button>
+          </View>
         </View>
-      </View>
-    );
+      );
+    }
   }
 }
+
 const styles = StyleSheet.create({
   body: {
     marginTop: 40

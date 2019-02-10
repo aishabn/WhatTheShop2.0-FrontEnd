@@ -3,8 +3,7 @@ import { Toast } from "native-base";
 import axios from "axios";
 
 const instance = axios.create({
-  // baseURL: "http://127.0.0.1:8000/"
-  baseURL: "http://207.154.255.247/"
+  baseURL: "http://207.154.255.247"
 });
 
 class CartStore {
@@ -12,25 +11,55 @@ class CartStore {
     this.cartItems = [];
     this.showToast = false;
     this.previousOrders = [];
+    // this.fetchPreviousOrders();
   }
 
-  fetchOrders() {
+  fetchPreviousOrders() {
     instance
-      .get("api/order")
+      .get("api/order/")
       .then(res => res.data)
       .then(order => (this.previousOrders = order))
       .catch(err => console.error(err));
   }
 
-  postOrder(newOrder) {
+  checkoutCart() {
+    //change Order status in backend
+    //True = Active
+    //False = Closed
+
     instance
-      .post("api/order/create/", newOrder)
+      .get("api/checkout/")
       .then(res => res.data)
-      .then(order => {
-        this.cartItems.push(order);
-        // this.loading = false;
+      .then(() => {
+        this.cartItems.forEach(item => this.previousOrders.push(item));
       })
+      .then(alert("order received!"))
       .catch(err => console.error(err));
+  }
+
+  apiCartCreate(cartItem) {
+    console.log("Cart Item: ", cartItem);
+    //converts the product to a CartItem and generates an order if its a new order, or adds the product to an existing order
+    instance
+      .post("api/create/item", cartItem)
+      .then(res => res.data)
+      .then(item => {
+        console.log("ITEM COMING BACK FROM API", item);
+        Toast.show({
+          text: `${item.name} has been added to the list`,
+          buttonText: "Okay",
+          duration: 3000
+        });
+      })
+      .then((this.cartItems = []))
+      //use for invalid authentication
+      .catch(err =>
+        Toast.show({
+          text: `${err}`,
+          buttonText: "Okay",
+          duration: 7000
+        })
+      );
   }
 
   addItemToCart(item) {
@@ -39,13 +68,18 @@ class CartStore {
     );
     if (foundItem) {
       foundItem.quantity += item.quantity;
-      Toast.show({
-        text: `${foundItem.name} has been added to the list`,
-        buttonText: "Okay",
-        duration: 3000
+      console.log("CART ITEMS 1: ", this.cartItems);
+      this.apiCartCreate({
+        item: foundItem.id,
+        quantity: foundItem.quantity
       });
     } else {
       this.cartItems.push(item);
+      console.log("CART ITEMS 2: ", this.cartItems);
+      this.apiCartCreate({
+        item: item.id,
+        quantity: item.quantity
+      });
       Toast.show({
         text: `${item.name} has been added to the list`,
         buttonText: "Okay",
@@ -55,14 +89,10 @@ class CartStore {
   }
 
   removeItemFromCart(item) {
+    //every time the user deletes an item, implement destroy api view to delete it from the backend
     this.cartItems = this.cartItems.filter(cartItem => cartItem !== item);
   }
 
-  checkoutCart(newOrder) {
-    this.cartItems = [];
-    this.postOrder(newOrder);
-    alert("order received!");
-  }
   get quantity() {
     let quantity = 0;
     this.cartItems.forEach(item => (quantity = quantity + item.quantity));
@@ -78,6 +108,7 @@ class CartStore {
 decorate(CartStore, {
   cartItems: observable,
   previousOrders: observable,
+  apiCartCreate: observable,
   addItemToCart: action,
   removeItemFromCart: action,
   checkoutCart: action,

@@ -7,7 +7,6 @@ import CartStore from "../../stores/cartStore";
 // const CartItem = props => (
 class CartItem extends Component {
   render() {
-    console.log("CART: " + this.props);
     return (
       <ListItem>
         <Left>

@@ -13,7 +13,11 @@ import {
   Icon,
   Left,
   Body,
-  Right
+  Right,
+  Tile,
+  Subtitle,
+  Heading,
+  Title
 } from "native-base";
 
 class ProductItem extends Component {
@@ -71,4 +75,24 @@ class ProductItem extends Component {
   }
 }
 
-export default withNavigation(ProductItem);
+export default ProductItem;
+
+{
+  /* <Image
+        styleName="featured"
+        source={{
+          uri: "https://shoutem.github.io/img/ui-toolkit/examples/image-11.png"
+        }}
+      >
+        <Tile>
+          <Title styleName="md-gutter-top" />
+          <Subtitle styleName="line-through sm-gutter-top" />
+          <Heading />
+          <Text note>Price:{this.props.product.price}</Text>
+          <Button styleName="md-gutter-top">
+            <Icon name="cart" />
+            <Text>ADD TO BASKET</Text>
+          </Button>
+        </Tile>
+      </Image> */
+}

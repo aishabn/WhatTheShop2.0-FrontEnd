@@ -34,25 +34,11 @@ class ProductDetail extends Component {
     this.state = {
       quantity: 1
     };
-    // this.changeQuantity = this.changeQuantity.bind(this);
   }
   static navigationOptions = ({ navigation }) => ({
     title: navigation.getParam("item", {}).name,
     headerRight: <CartButton route="Cart" />
   });
-
-  // changeQuantity(value) {
-  //   console.log(value);
-  //   this.setState({
-  //     quantity: value
-  //   });
-  // }
-  // increasetItem = () => {
-  //   this.setState({ quantity: this.state.quantity + 1 });
-  // };
-  // decreaseItem = () => {
-  //   this.setState({ quantity: this.state.quantity - 1 });
-  // };
 
   handleAdd() {
     const quantity = this.state.quantity;
