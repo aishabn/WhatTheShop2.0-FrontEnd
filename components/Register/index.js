@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Form, Item, Input, Button, Text } from "native-base";
-
+import { Form, Item, Button, Text } from "native-base";
+import { Input } from "react-native-elements";
+import Icon from "react-native-vector-icons/FontAwesome";
 import axios from "axios";
 
 import authStore from "../../stores/authStore";
@@ -42,23 +43,11 @@ class Register extends Component {
       <Form>
         <Item>
           <Input
-            placeholder="First Name"
-            autoCapitalize="none"
-            onChangeText={first_name => this.setState({ first_name })}
-          />
-        </Item>
-        <Item>
-          <Input
-            placeholder="Last Name"
-            autoCapitalize="none"
-            onChangeText={last_name => this.setState({ last_name })}
-          />
-        </Item>
-        <Item>
-          <Input
             placeholder="Username"
             autoCapitalize="none"
             onChangeText={username => this.setState({ username })}
+            errorStyle={{ color: "353535" }}
+            errorMessage="Requiered"
           />
         </Item>
         <Item>
@@ -67,7 +56,23 @@ class Register extends Component {
             autoCapitalize="none"
             secureTextEntry={true}
             onChangeText={password => this.setState({ password })}
+            errorStyle={{ color: "353535" }}
+            errorMessage="Requiered"
           />
+          <Item>
+            <Input
+              placeholder="First Name"
+              autoCapitalize="none"
+              onChangeText={first_name => this.setState({ first_name })}
+            />
+          </Item>
+          <Item>
+            <Input
+              placeholder="Last Name"
+              autoCapitalize="none"
+              onChangeText={last_name => this.setState({ last_name })}
+            />
+          </Item>
         </Item>
         <Item>
           <Input
@@ -127,7 +132,7 @@ class Register extends Component {
             }
           />
         </Item>
-        <Button full onPress={() => this.handleRegister()}>
+        <Button full dark onPress={() => this.handleRegister()}>
           <Text>Register</Text>
         </Button>
       </Form>
