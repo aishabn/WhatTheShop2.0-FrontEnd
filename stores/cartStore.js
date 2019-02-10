@@ -3,9 +3,7 @@ import { Toast } from "native-base";
 import axios from "axios";
 
 const instance = axios.create({
-
- baseURL: "http://207.154.255.247/"
-
+  baseURL: "http://207.154.255.247/"
 });
 
 class CartStore {
@@ -21,7 +19,7 @@ class CartStore {
       .get("api/order/")
       .then(res => res.data)
       .then(order => (this.previousOrders = order))
-      .catch(err => console.error(err));
+      .catch(err => console.log(err));
   }
 
   checkoutCart() {
@@ -37,7 +35,14 @@ class CartStore {
       })
       .then((this.cartItems = []))
       .then(alert("order received!"))
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.log(err);
+        Toast.show({
+          text: "You have to login first :)",
+          buttonText: "Okay",
+          duration: 7000
+        });
+      });
   }
 
   apiCartCreate(cartItem) {
@@ -48,20 +53,11 @@ class CartStore {
       .then(res => res.data)
       .then(item => {
         console.log("ITEM COMING BACK FROM API", item);
-        Toast.show({
-          text: `${item.name} has been added to the list`,
-          buttonText: "Okay",
-          duration: 3000
-        });
       })
       //use for invalid authentication
-      .catch(err =>
-        Toast.show({
-          text: `${err}`,
-          buttonText: "Okay",
-          duration: 7000
-        })
-      );
+      .catch(err => {
+        console.log(err.response.data);
+      });
   }
 
   addItemToCart(item) {
@@ -71,17 +67,17 @@ class CartStore {
     if (foundItem) {
       foundItem.quantity += item.quantity;
       console.log("CART ITEMS 1: ", this.cartItems);
-      this.apiCartCreate(item);
+      this.apiCartCreate({ item: foundItem.id, quantity: foundItem.quantity });
     } else {
       this.cartItems.push(item);
       console.log("CART ITEMS 2: ", this.cartItems);
-      this.apiCartCreate(item);
-      Toast.show({
-        text: `${item.name} has been added to the list`,
-        buttonText: "Okay",
-        duration: 3000
-      });
+      this.apiCartCreate({ item: item.id, quantity: item.quantity });
     }
+    Toast.show({
+      text: `${item.quantity} ${item.name} has been added to the list`,
+      buttonText: "Okay",
+      duration: 3000
+    });
   }
 
   removeItemFromCart(item) {

@@ -2,10 +2,12 @@ import { decorate, observable, action, computed } from "mobx";
 import axios from "axios";
 import { AsyncStorage } from "react-native";
 import jwt_decode from "jwt-decode";
-import { navigation } from "react-navigation";
+import { Toast } from "native-base";
 
 const instance = axios.create({
-  baseURL: "http://207.154.255.247"
+  // baseURL: "http://127.0.0.1:8000/"
+  baseURL: "http://207.154.255.247/"
+  // baseURL: "http://192.168.8.101:8000"
 });
 
 class Store {
@@ -13,6 +15,7 @@ class Store {
     this.user = null;
     this.profile = null;
     this.loading = true;
+    this.checkForToken();
   }
 
   userProfileData() {
@@ -79,7 +82,14 @@ class Store {
           () => console.log("something went wrong with setting jwt token")
         );
       })
-      .catch(err => console.log("something went wrong logging in"));
+      .catch(err => {
+        console.log("something went wrong logging in");
+        Toast.show({
+          text: `${err}`,
+          buttonText: "Okay",
+          duration: 7000
+        });
+      });
   }
 
   registerUser(userData, navigation) {
@@ -91,7 +101,14 @@ class Store {
       .then(() => {
         this.loginUser(userData, navigation);
       })
-      .catch(err => console.error(err.response.data));
+      .catch(err => {
+        console.log(err.response.data);
+        Toast.show({
+          text: `${err}`,
+          buttonText: "Okay",
+          duration: 7000
+        });
+      });
   }
 
   checkForToken = () => {
